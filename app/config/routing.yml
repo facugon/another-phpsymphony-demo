@@ -1,0 +1,5 @@
+clip_main:
+    resource: "@ClipMainBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
