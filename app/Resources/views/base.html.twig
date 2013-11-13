@@ -20,13 +20,15 @@
         {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}" />
         <link rel="stylesheet" href="{{ asset('/css/carousel.css') }}" />
+        <link rel="stylesheet" href="{{ asset('/css/main.css') }}" />
         {% endblock %}
 
         <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         <style id="holderjs-style" type="text/css"></style>
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {% block body %}
+        {% endblock %}
 
         {% block javascripts %}
         <!-- basic scripts -->

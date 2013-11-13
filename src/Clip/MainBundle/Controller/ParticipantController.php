@@ -35,6 +35,52 @@ class ParticipantController extends Controller
             'entities' => $entities,
         );
     }
+
+    /**
+     * Allow a Participant to subscribe to available formula
+     *
+     * @Route("/subscribe", name="participant_subscribe")
+     * @Method("GET")
+     * @Template()
+     */
+    public function subscribeAction()
+    {
+        $entity = new Participant();
+        $form   = $this->createCreateForm($entity,'participant_createsubscription','Subscribe');
+
+        return array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+        );
+    }
+
+    /**
+     * Creates a new Participant entity for Subscription.
+     *
+     * @Route("/createsubscription", name="participant_createsubscription")
+     * @Method("POST")
+     * @Template("ClipMainBundle:Participant:subscribe.html.twig")
+     */
+    public function createSubscriptionAction(Request $request)
+    {
+        $entity = new Participant();
+        $form = $this->createCreateForm($entity,'participant_createsubscription','Subscribe');
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('formula_subscribe', array('Participant_id' => $entity->getId())));
+        }
+
+        return array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+        );
+    }
+
     /**
      * Creates a new Participant entity.
      *
@@ -45,7 +91,7 @@ class ParticipantController extends Controller
     public function createAction(Request $request)
     {
         $entity = new Participant();
-        $form = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity,'participant_create','Create');
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -66,17 +112,19 @@ class ParticipantController extends Controller
     * Creates a form to create a Participant entity.
     *
     * @param Participant $entity The entity
+    * @param string $action The submit form action 
+    * @param string $entity The submit button label 
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createCreateForm(Participant $entity)
+    private function createCreateForm(Participant $entity,$action,$label)
     {
         $form = $this->createForm(new ParticipantType(), $entity, array(
-            'action' => $this->generateUrl('participant_create'),
+            'action' => $this->generateUrl( $action ),
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => $label));
 
         return $form;
     }
@@ -91,7 +139,7 @@ class ParticipantController extends Controller
     public function newAction()
     {
         $entity = new Participant();
-        $form   = $this->createCreateForm($entity);
+        $form   = $this->createCreateForm($entity,'participant_create','Create');
 
         return array(
             'entity' => $entity,

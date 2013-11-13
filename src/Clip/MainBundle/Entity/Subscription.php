@@ -24,14 +24,14 @@ class Subscription
     /**
      * @var integer
      *
-     * @ORM\Column(name="participant_id", type="integer")
+     * @ORM\Column(name="idParticipant", type="integer")
      */
     private $participantId;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="formula_id", type="integer")
+     * @ORM\Column(name="idFormula", type="integer")
      */
     private $formulaId;
 

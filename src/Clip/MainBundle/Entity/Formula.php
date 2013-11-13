@@ -31,28 +31,28 @@ class Formula
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_start", type="date")
+     * @ORM\Column(name="dateStart", type="date")
      */
     private $dateStart;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_end", type="date")
+     * @ORM\Column(name="dateEnd", type="date")
      */
     private $dateEnd;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="age_min", type="integer")
+     * @ORM\Column(name="ageMin", type="integer")
      */
     private $ageMin;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="age_max", type="integer")
+     * @ORM\Column(name="ageMax", type="integer")
      */
     private $ageMax;
 

@@ -24,14 +24,14 @@ class Participant
     /**
      * @var string
      *
-     * @ORM\Column(name="first_name", type="string", length=255)
+     * @ORM\Column(name="firstname", type="string", length=255)
      */
     private $firstName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="last_name", type="string", length=255)
+     * @ORM\Column(name="lastname", type="string", length=255)
      */
     private $lastName;
 
@@ -150,5 +150,14 @@ class Participant
     public function getBirthdate()
     {
         return $this->birthdate;
+    }
+
+    public function getAge()
+    {
+        $then_year = date('Y', $this->birthdate->getTimestamp());
+        $age = date('Y') - $then_year;
+        if( strtotime('+' . $age . ' years', $this->birthdate->getTimestamp()) > time() )
+            $age--;
+        return $age;
     }
 }

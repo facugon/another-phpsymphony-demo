@@ -1,0 +1,38 @@
+{% extends '::layout.html.twig' %}
+
+{% block main %}
+<div class="container">
+    <h1>Step 2 - Available Formulas</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Date Start</th>
+                <th>Date End</th>
+                <th>Age Min</th>
+                <th>Age Max</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in formulas %}
+            <tr>
+                <td><a href="{{ path('formula_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
+                <td>{% if entity.dateStart %}{{ entity.dateStart|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.dateEnd %}{{ entity.dateEnd|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.ageMin }}</td>
+                <td>{{ entity.ageMax }}</td>
+                <td>
+                    <ul>
+                        <li>
+                        <a href="{{ path('subscription_create', { 'Formula_id': entity.id, 'Participant_id': participant.id }) }}">Subscribe!</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
