@@ -3,6 +3,8 @@
 namespace Clip\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Validation;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Participant
@@ -39,6 +41,10 @@ class Participant
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255)
+     * @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email.",
+     *     checkMX = false
+     * )
      */
     private $email;
 
@@ -46,6 +52,7 @@ class Participant
      * @var \DateTime
      *
      * @ORM\Column(name="birthdate", type="date")
+     * @Assert\Date()
      */
     private $birthdate;
 
@@ -152,6 +159,11 @@ class Participant
         return $this->birthdate;
     }
 
+    /**
+     * Get age
+     *
+     * @return integer
+     */
     public function getAge()
     {
         $then_year = date('Y', $this->birthdate->getTimestamp());

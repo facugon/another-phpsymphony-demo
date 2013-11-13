@@ -18,7 +18,7 @@ class ParticipantType extends AbstractType
             ->add('firstName')
             ->add('lastName')
             ->add('email')
-            ->add('birthdate')
+            ->add('birthdate','date',array( 'widget' => 'single_text'))
         ;
     }
     

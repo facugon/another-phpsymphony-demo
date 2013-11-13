@@ -19,14 +19,14 @@
             {% for entity in formulas %}
             <tr>
                 <td><a href="{{ path('formula_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
-                <td>{% if entity.dateStart %}{{ entity.dateStart|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if entity.dateEnd %}{{ entity.dateEnd|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.dateStart %}{{ entity.dateStart|date('d-m-Y') }}{% endif %}</td>
+                <td>{% if entity.dateEnd %}{{ entity.dateEnd|date('d-m-Y') }}{% endif %}</td>
                 <td>{{ entity.ageMin }}</td>
                 <td>{{ entity.ageMax }}</td>
                 <td>
                     <ul>
                         <li>
-                        <a href="{{ path('subscription_create', { 'Formula_id': entity.id, 'Participant_id': participant.id }) }}">Subscribe!</a>
+                        <a href="{{ path('subscription_subscribe', {'idParticipant': participant.id, 'idFormula': entity.id}) }}">Subscribe!</a>
                         </li>
                     </ul>
                 </td>
