@@ -8,6 +8,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 use Clip\MainBundle\Entity\SubscriptionState as State;
 
+use Clip\MainBundle\Entity\Formula;
+use Clip\MainBundle\Entity\Participant;
+
 /**
  * Subscription
  *
@@ -26,34 +29,9 @@ class Subscription
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="participant_id", type="integer")
-     * @Assert\Type(type="numeric", message="The value {{ value }} is not a valid {{ type }}.")
-     */
-    private $idParticipant;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="formula_id", type="integer")
-     * @Assert\Type(type="numeric", message="The value {{ value }} is not a valid {{ type }}.")
-     */
-    private $idFormula;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="subscriptionstate_id", type="integer")
-     * @Assert\Type(type="numeric", message="The value {{ value }} is not a valid {{ type }}.")
-     */
-    private $idState = State::Informed ;
-
-
-    /**
      * @var Clip\MainBundle\Entity\Participant
      *
-     * @ORM\OneToOne(targetEntity="Clip\MainBundle\Entity\Participant")
+     * @ORM\ManyToOne(targetEntity="Clip\MainBundle\Entity\Participant")
      * @ORM\JoinColumn(name="participant_id", referencedColumnName="id")
      */
     private $participant;
@@ -61,7 +39,7 @@ class Subscription
     /**
      * @var Clip\MainBundle\Entity\Formula
      *
-     * @ORM\OneToOne(targetEntity="Clip\MainBundle\Entity\Formula")
+     * @ORM\ManyToOne(targetEntity="Clip\MainBundle\Entity\Formula")
      * @ORM\JoinColumn(name="formula_id", referencedColumnName="id")
      */
     private $formula;
@@ -69,7 +47,7 @@ class Subscription
     /**
      * @var Clip\MainBundle\Entity\SubscriptionState
      *
-     * @ORM\OneToOne(targetEntity="Clip\MainBundle\Entity\SubscriptionState")
+     * @ORM\ManyToOne(targetEntity="Clip\MainBundle\Entity\SubscriptionState")
      * @ORM\JoinColumn(name="subscriptionstate_id", referencedColumnName="id")
      */
     private $state ;
@@ -85,26 +63,26 @@ class Subscription
     }
 
     /**
-     * Set idParticipant
+     * Set Participant
      *
      * @param integer $idParticipant
      * @return Subscription
      */
-    public function setParticipantId($idParticipant)
+    public function setParticipant($participant)
     {
-        $this->idParticipant = $idParticipant;
+        $this->participant = $participant;
     
         return $this;
     }
 
     /**
-     * Get idParticipant
+     * Get Participant
      *
      * @return integer 
      */
-    public function getParticipantId()
+    public function getParticipant()
     {
-        return $this->idParticipant;
+        return $this->participant;
     }
 
     /**
@@ -113,9 +91,9 @@ class Subscription
      * @param integer $idFormula
      * @return Subscription
      */
-    public function setFormulaId($idFormula)
+    public function setFormula($formula)
     {
-        $this->idFormula = $idFormula;
+        $this->formula = $formula;
     
         return $this;
     }
@@ -125,9 +103,9 @@ class Subscription
      *
      * @return integer 
      */
-    public function getFormulaId()
+    public function getFormula()
     {
-        return $this->idFormula;
+        return $this->formula;
     }
 
     /**
@@ -136,9 +114,9 @@ class Subscription
      * @param integer id
      * @return Subscription
      */
-    public function setStateId($id)
+    public function setState($state)
     {
-        $this->idState = $id;
+        $this->state = $state;
     
         return $this;
     }
@@ -148,38 +126,8 @@ class Subscription
      *
      * @return integer 
      */
-    public function getStateId()
-    {
-        return $this->idState;
-    }
-
-    /**
-     * Get status
-     *
-     * @return Clip\MainBundle\Entity\SubscriptionState
-     */
     public function getState()
     {
         return $this->state;
-    }
-
-    /**
-     * Get participant
-     *
-     * @return Clip\MainBundle\Entity\Participant
-     */
-    public function getParticipant()
-    {
-        return $this->participant;
-    }
-
-    /**
-     * Get formula
-     *
-     * @return Clip\MainBundle\Entity\Formula
-     */
-    public function getFormula()
-    {
-        return $this->formula;
     }
 }

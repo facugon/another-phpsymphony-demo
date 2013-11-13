@@ -9,6 +9,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use Clip\MainBundle\Entity\Subscription;
+use Clip\MainBundle\Entity\Formula;
+use Clip\MainBundle\Entity\Participant;
+
 use Clip\MainBundle\Entity\SubscriptionState as SubscriptionState;
 use Clip\MainBundle\Form\SubscriptionType;
 
@@ -47,9 +51,15 @@ class SubscriptionController extends Controller
      */
     public function subscribeAction($idParticipant,$idFormula)
     {
+        $em = $this->getDoctrine()->getManager();
+        $participant = $em->getRepository('ClipMainBundle:Participant')->find($idParticipant);
+        $formula = $em->getRepository('ClipMainBundle:Formula')->find($idFormula);
+        $state = $em->getRepository('ClipMainBundle:SubscriptionState')->find(SubscriptionState::Informed);
+
         $subscription = new Subscription();
-        $subscription->setParticipantId($idParticipant);
-        $subscription->setFormulaId($idFormula);
+        $subscription->setParticipant($participant);
+        $subscription->setFormula($formula);
+        $subscription->setState($state);
 
         $validator = $this->get('validator');
         $errors = $validator->validate($subscription);
@@ -57,7 +67,6 @@ class SubscriptionController extends Controller
         $error = false;
         if( count($errors) == 0 )
         {
-            $em = $this->getDoctrine()->getManager();
             $em->persist($subscription);
             $em->flush();
 
@@ -171,7 +180,8 @@ class SubscriptionController extends Controller
 
         if ( !$subscription ) throw $this->createNotFoundException('Unable to find Subscription entity.');
 
-        $subscription->setStateId( SubscriptionState::Confirmed );
+        $state = $em->getRepository('ClipMainBundle:SubscriptionState')->find( SubscriptionState::Confirmed );
+        $subscription->setState( $state );
 
         $em->persist($subscription);
         $em->flush();
