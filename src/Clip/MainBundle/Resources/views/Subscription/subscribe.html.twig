@@ -1,0 +1,13 @@
+{% extends '::layout.html.twig' %}
+
+{% block main -%}
+<div class="container">
+    {% if error %}
+    <h1>Subscription Error</h1>
+    {% else %}
+    <h1>Subscription</h1>
+    <h3>Thank you!</h3>
+    {% endif %}
+</div>
+{% endblock %}
+

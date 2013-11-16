@@ -17,7 +17,6 @@ use Clip\MainBundle\Form\ParticipantType;
  */
 class ParticipantController extends Controller
 {
-
     /**
      * Lists all Participant entities.
      *
@@ -33,51 +32,6 @@ class ParticipantController extends Controller
 
         return array(
             'entities' => $entities,
-        );
-    }
-
-    /**
-     * Allow a Participant to subscribe to available formula
-     *
-     * @Route("/subscribe", name="participant_subscribe")
-     * @Method("GET")
-     * @Template()
-     */
-    public function subscribeAction()
-    {
-        $entity = new Participant();
-        $form   = $this->createCreateForm($entity,'participant_createsubscription','Subscribe');
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
-
-    /**
-     * Creates a new Participant entity for Subscription.
-     *
-     * @Route("/createsubscription", name="participant_createsubscription")
-     * @Method("POST")
-     * @Template("ClipMainBundle:Participant:subscribe.html.twig")
-     */
-    public function createSubscriptionAction(Request $request)
-    {
-        $entity = new Participant();
-        $form = $this->createCreateForm($entity,'participant_createsubscription','Subscribe');
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('formula_subscribe', array('Participant_id' => $entity->getId())));
-        }
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
         );
     }
 

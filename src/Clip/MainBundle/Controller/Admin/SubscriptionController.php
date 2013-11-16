@@ -19,7 +19,6 @@ use Clip\MainBundle\Form\SubscriptionType;
  */
 class SubscriptionController extends Controller
 {
-
     /**
      * Lists all Subscription entities.
      *
@@ -36,36 +35,6 @@ class SubscriptionController extends Controller
         return array(
             'entities' => $entities,
         );
-    }
-
-    /**
-     * Creates a new Subscription entity.
-     *
-     * @Route("/subscribe/{idParticipant}/{idFormula}", name="subscription_subscribe")
-     * @Method("GET")
-     * @Template("ClipMainBundle:Subscription:subscribe.html.twig")
-     */
-    public function subscribeAction($idParticipant,$idFormula)
-    {
-        $subscription = new Subscription();
-        $subscription->setParticipantId($idParticipant);
-        $subscription->setFormulaId($idFormula);
-
-        $validator = $this->get('validator');
-        $errors = $validator->validate($subscription);
-
-        $error = false;
-        if( count($errors) == 0 )
-        {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($subscription);
-            $em->flush();
-
-            $id = $subscription->getId();
-        }
-        else $error = true ;
-
-        return array('error' => $error, 'errors' => $errors);
     }
 
     /**

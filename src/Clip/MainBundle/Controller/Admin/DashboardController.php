@@ -3,6 +3,8 @@
 namespace Clip\MainBundle\Controller\Admin;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -14,7 +16,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class DashboardController extends Controller
 {
     /**
-     * @Route("/")
+     * Show the Admin Dashboard
+     *
+     * @Route("/", name="admin_dashboard")
+     * @Method("GET")
      * @Template()
      */
     public function indexAction()
